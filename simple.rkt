@@ -47,3 +47,20 @@
 (mchoice 1
     (0 "mchoose zero")
     (1 "mchoose uno"))
+
+(define-syntax mchoice2
+  (syntax-rules ()
+    [(mchoice2 x) "mchoose2 fail"]
+    [(mchoice2 x r ...)
+     (case x r ...)]))
+
+(mchoice2 1)
+
+(mchoice2 1
+    ((0) "mchose2 zero"))
+(mchoice2 0
+    ((0) "mchoose2 zero"))
+(mchoice2 1
+    ((0) "mchoose2 zero")
+    ((1) "mchoose2 uno"))
+

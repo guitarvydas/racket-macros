@@ -1,5 +1,6 @@
 #lang racket
 ; fear of macros https://www.greghendershott.com/fear-of-macros/Transform_.html
+(require (for-syntax racket/syntax))
 
 (define-syntax foo
     (lambda (stx)
@@ -47,3 +48,22 @@
 
 (stringify-1 1)
 (stringify-1 f8)
+
+(define-syntax (hyphen-define/ok3 stx)
+    (syntax-case stx ()
+      [(_ a b (args ...) body0 body ...)
+;       (with-syntax ([name (format-id #'a "~a-~a" #'a #'b)])
+       (with-syntax ([name (format "formated: ~a-~a" (syntax->datum #'a) (syntax->datum #'b))])
+#'(println (format "~v" name)))]))
+;         #'(define (name args ...)
+;             body0 body ...))]))
+(hyphen-define/ok3 bar baz () #t)
+;(bar-baz)
+
+;(define-syntax (stringify stx)
+;  (syntax-case stx ()
+;    [(stringify idstr)
+;     (with-syntax ([id (format-id #'idstr "\"~a\"" #'idstr)])
+;       #'(define yyy id))]))
+
+;;(println (stringify xxx))

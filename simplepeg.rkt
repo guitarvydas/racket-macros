@@ -3,4 +3,4 @@
 
 (require "../racket-peg/s-exp.rkt");
 
-clause <- 'f8' ':' s-exp;
+clause <- 'f8' s-exp;

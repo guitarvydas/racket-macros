@@ -1,0 +1,3 @@
+#lang peg
+(require "s-exp.rkt")
+clause <- "f8" ":" s-exp;

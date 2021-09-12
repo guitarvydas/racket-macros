@@ -1,0 +1,11 @@
+#lang racket
+(require (for-syntax racket/syntax))
+
+(define-syntax (stringify stx)
+  (syntax-case stx ()
+    [(stringify idstr)
+     (with-syntax ([id (format "~a" (syntax->datum #'idstr))])
+       #'id)]))
+
+(println (stringify xxx))
+(stringify (a b c))

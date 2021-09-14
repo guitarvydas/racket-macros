@@ -1,0 +1,32 @@
+#lang racket
+
+(require (for-syntax syntax/parse))
+
+(define-syntax (switch stx)
+  (syntax-parse stx
+    [(_switch)
+     #'(raise-syntax-error 'switch "value expression and at least one clause expected" stx)]
+    [(_switch expr clause ...)
+     #'(let ([v expr])
+         (switch-value v clause ...))]))
+
+(define-syntax (switch-value stx)
+  (syntax-parse stx
+    #:literals (else)
+    [(_switch-value v)
+     #'(raise-syntax-error 'switch "at least one clause is expected" _switch-value)]
+    [(_switch-value v [else expr])
+     #'expr]
+    [(_switch-value v [expr1 expr2] clause ...)
+     #'(if (equal? v expr1)
+           expr2
+           (switch-value v clause ...))]))
+
+
+(define x 4)
+
+(switch x
+  [3 "x is 3"]
+  [4 "x is 4"]
+  [5 "x is 5"]
+  [else (displayln "none of the above")])

@@ -4,7 +4,7 @@
 (define-syntax (quotify stx)
   (syntax-case stx ()
     [(_ idstr)
-     #'(let ((d (syntax->datum #'idstr)))
-         d)]))
-(quotify (a b c))
-(quotify d)
+     #'(syntax->datum #'idstr)]))
+
+(println (quotify (a b c)))
+(println (quotify d))

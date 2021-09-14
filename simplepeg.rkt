@@ -3,4 +3,6 @@
 
 (require "../racket-peg/s-exp.rkt");
 
-clause <- 'f8' s-exp;
+clause <- 'right' _ ':' _  -> e;
+
+    right: (world-move w 1 0)
